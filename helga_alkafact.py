@@ -30,6 +30,6 @@ def alkafact(client, channel, nick, message, cmd, args):
 
     if args[0] == 'add':
         add_fact(' '.join(args[1:]))
-        return 'Done!'
+        return 'Added.'
 
     return retrieve_fact(args[0])
