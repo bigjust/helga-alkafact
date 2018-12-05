@@ -4,12 +4,7 @@ from helga import settings
 from helga.db import db
 from helga.plugins import command
 
-def add_fact(fact):
-    db.alkafact.insert({
-        'text': fact
-    })
-
-def retrieve_fact(key):
+def retrieve_fact(key=''):
 
     pipeline = [
         {'$match': {
@@ -28,8 +23,13 @@ def retrieve_fact(key):
 @command('rem', help='like chuck norris facts, but for alkapwn')
 def alkafact(client, channel, nick, message, cmd, args):
 
-    if args[0] == 'add':
-        add_fact(' '.join(args[1:]))
-        return 'Added.'
+    if args:
+        if args[0] == 'add':
+            db.alkafact.insert({
+                'text': ' '.join(args[1:]),
+            })
+            return 'Added.'
 
-    return retrieve_fact(args[0])
+        return retrieve_fact(args[0])
+
+    return retrieve_fact()
